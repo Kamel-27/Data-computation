@@ -11,10 +11,10 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 
 st.title("Diabetes Health Indicators Analysis")
 
-uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
-
-if uploaded_file:
-    df = pd.read_csv(uploaded_file)
+# Read dataset directly from GitHub URL
+github_url = "https://raw.githubusercontent.com/Kamel-27/Data-computation/main/diabetes_binary_5050split_health_indicators_BRFSS2015.csv"
+try:
+    df = pd.read_csv(github_url)
     data = df.copy()
 
     st.subheader("Preview of Dataset")
@@ -110,5 +110,5 @@ if uploaded_file:
 
             st.success(f"Predicted Diabetes Class: {prediction[0]}")
 
-else:
-    st.info("Please upload a CSV file to proceed.")
+except Exception as e:
+    st.error(f"Failed to load dataset from GitHub. Error: {e}")
