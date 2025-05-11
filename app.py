@@ -93,10 +93,9 @@ try:
             input_lda = lda.transform(new_record)
             input_scaled = scaler.transform(input_lda)
             prediction = svm.predict(input_scaled)
-            prediction_proba = svm.predict_proba(input_scaled)[0][int(prediction[0])]
-
-            st.success(f"✅ Predicted Diabetes Class: {prediction[0]}")
-            st.info(f"Prediction Confidence: {prediction_proba:.2%}")
-
+            if prediction[0] == 0:
+                st.success("✅ Result: The patient is **not diabetic** (Healthy).")
+            else:
+                st.warning("⚠️ Result: The patient is **pre-diabetic or diabetic**. Further medical evaluation is recommended.")
 except Exception as e:
     st.error(f"❌ Failed to load dataset or model. Error: {e}")
